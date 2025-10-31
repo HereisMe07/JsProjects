@@ -1,0 +1,44 @@
+<!-- <!DOCTYPE html> tells the browser this is an HTML5 document. -->
+<!DOCTYPE html>
+<!-- lang="en" specifies the page language (English). -->
+<html lang="en">
+    <head>
+        <!-- <meta charset="UTF-8"> → supports all text characters (English, Khmer, etc.) -->
+        <meta charset="UTF-8" />
+        <!-- <meta name="viewport"...> → makes your site responsive on mobile devices. -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- text shown on the browser tab. -->
+        <title>Color Flipper || Simple</title>
+        <!-- styles  → connects your CSS file so you can style the page.-->
+         <link rel="stylesheet" href="styles.css" />
+    </head>
+    <!-- The <body> section — visible content This is what appears on the web page.-->
+    <body>
+        <!-- Navigation Bar → navigation section at the top.-->
+        <nav>
+            <div class="nav-center">
+                <!-- the title "color flipper". -->
+                <h4>color flipper</h4>
+                <!-- an unordered list (for links). -->
+                <ul class="nav-links">
+                    <!-- index.html → leads to the “Simple” version (your current page). -->
+                    <li><a href="index.html">simple</a></li>
+                    <!-- hex.html → will lead to another page (for random hex color generator). -->
+                    <li><a href="hex.html">hex</a></li>
+                </ul>
+            </div>
+        </nav>
+        <!-- → the main content area of the page. -->
+        <main>
+            <!-- → a wrapper for styling layout. -->
+            <div class="container">
+               <!-- → shows the current background color. -->
+                <h2>background color : <span class="color">#f1f5f8</span></h2>
+                <!-- → button that triggers your JavaScript. -->
+                <button class="btn btn-hero" id="btn">click me</button>
+            </div>
+        </main>
+        <!-- javaScript -->
+         <script src="app.js"></script>
+    </body>
+</html>
