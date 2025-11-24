@@ -84,15 +84,16 @@ const menu = [
 const sectionCenter = document.querySelector(".section-center");
 const btnContainer = document.querySelector(".btn-container");
 // display all items when page loads
-window.addEventListener("DOMContentLoaded", function () {
-    displayMenuItems(menu);
-    displayMenuButtons();
+window.addEventListener("DOMContentLoaded", function () { // loads → show everything
+    displayMenuItems(menu); // Show all menu items
+    displayMenuButtons(); // Show all buttons
 });
 
-function displayMenuItems(menuItems) {
-  let displayMenu = menuItems.map(function (item) {
+// displayMenuItems(menuItems)
+function displayMenuItems(menuItems) { // Loops through the array you pass (menuItems):
+  let displayMenu = menuItems.map(function (item) { 
     // console.log(item);
-        
+    // Creates HTML for each item (<article> with image, title, price, desc)
     return `<article class="menu-item">
             <img src="${item.img}" alt="${item.title}" class="photo" />
             <div class="item-info" >
@@ -111,25 +112,28 @@ function displayMenuItems(menuItems) {
   sectionCenter.innerHTML = displayMenu; // innerHTML : inserts all items into the page
 }
 
-function displayMenuButtons() {
+// displayMenuButtons()
+function displayMenuButtons() { // Function: displayMenuButtons()This function automatically creates buttons based on categories.
+  // Finds all categories in your menu array:
   const categories = menu.reduce(
     function (values, item) {
       if (!values.includes(item.category)) {
         values.push(item.category);
       }
       return values;
-    },
-    ["all"]
+    },["all"] // start 
   );
-  const categoryBtns = categories
+  // Creates HTML buttons for each category:
+  const categoryBtns = categories // Create buttons for each category
     .map(function (category) { // map() returns an array of HTML strings
       return `<button type="button" class="filter-btn" data-id=${category}>${category}</button>`;
     })
     .join("");
+  // Inserts buttons into the page
   btnContainer.innerHTML = categoryBtns;
   const filterBtns = btnContainer.querySelectorAll(".filter-btn");
   console.log(filterBtns);
-
+  // Adds click events to filter items based on button clicked:
   filterBtns.forEach(function (btn) {
     btn.addEventListener("click", function (e) {
       // console.log(e.currentTarget.dataset);
