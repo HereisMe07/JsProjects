@@ -80,22 +80,24 @@ const menu = [
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
 ];
-// get parent element
-const sectionCenter = document.querySelector(".section-center");
-const btnContainer = document.querySelector(".btn-container");
-// display all items when page loads
-window.addEventListener("DOMContentLoaded", function () { // loads → show everything
+// get parent element // Select HTML Elements
+const sectionCenter = document.querySelector(".section-center"); // grabs the container where food items will show.
+const btnContainer = document.querySelector(".btn-container"); // grabs the container where filter buttons will show.
+// These are references to your HTML elements so JS can change them.
+
+// display all items when page loads // When page loads, show menu and buttons
+window.addEventListener("DOMContentLoaded", function () { // runs the code after HTML has fully loaded.
     displayMenuItems(menu); // Show all menu items
     displayMenuButtons(); // Show all buttons
 });
 
-// displayMenuItems(menuItems)
+// Function: displayMenuItems()
 function displayMenuItems(menuItems) { // Loops through the array you pass (menuItems):
-  let displayMenu = menuItems.map(function (item) { 
+  let displayMenu = menuItems.map(function (item) { // map() → loops through every item in the array and returns an HTML string for each.
     // console.log(item);
-    // Creates HTML for each item (<article> with image, title, price, desc)
-    return `<article class="menu-item">
-            <img src="${item.img}" alt="${item.title}" class="photo" />
+    // Creates HTML for each item (<article> with image, title, price, desc)  & ${item.price} = insert data from the object
+    return `<article class="menu-item">  
+            <img src="${item.img}" alt="${item.title}" class="photo" /> 
             <div class="item-info" >
                 <header>
                     <h4>${item.title}</h4>
@@ -107,46 +109,52 @@ function displayMenuItems(menuItems) { // Loops through the array you pass (menu
             </div>
         </article>`
   });
-  displayMenu = displayMenu.join(""); // .join("") combines them into one big string
+  displayMenu = displayMenu.join(""); // map() returns an array of strings, we use join("") to combine into one big string.
   // console.log(displayMenu);
   sectionCenter.innerHTML = displayMenu; // innerHTML : inserts all items into the page
 }
 
-// displayMenuButtons()
+// Function: displayMenuButtons()
 function displayMenuButtons() { // Function: displayMenuButtons()This function automatically creates buttons based on categories.
   // Finds all categories in your menu array:
-  const categories = menu.reduce(
+  const categories = menu.reduce( // Loops through the menu array and creates a list of unique categories.
     function (values, item) {
-      if (!values.includes(item.category)) {
+      if (!values.includes(item.category)) { // Adds the category only if it’s not already in the list.
         values.push(item.category);
       }
       return values;
-    },["all"] // start 
+    },["all"] // start with “all” as the first button.
   );
+
   // Creates HTML buttons for each category:
   const categoryBtns = categories // Create buttons for each category
-    .map(function (category) { // map() returns an array of HTML strings
-      return `<button type="button" class="filter-btn" data-id=${category}>${category}</button>`;
+    .map(function (category) { // map() creates a button for each category.
+      return `<button type="button" class="filter-btn" data-id=${category}>${category}</button>`; // stores the category in the button → used later for filtering.
     })
-    .join("");
+    .join(""); // combines all button HTML into one string.
   // Inserts buttons into the page
   btnContainer.innerHTML = categoryBtns;
+
+  // Selects all buttons we just created.
   const filterBtns = btnContainer.querySelectorAll(".filter-btn");
   console.log(filterBtns);
   // Adds click events to filter items based on button clicked:
-  filterBtns.forEach(function (btn) {
-    btn.addEventListener("click", function (e) {
+  filterBtns.forEach(function (btn) { // loop through each button
+    btn.addEventListener("clokick", function (e) { // Add event listener(click) to each button || e means event => contains information about what was clicked.
       // console.log(e.currentTarget.dataset);
-      const category = e.currentTarget.dataset.id;
-      const menuCategory = menu.filter(function (menuItem) {
+      const category = e.currentTarget.dataset.id; // gets the category from data-id attribute
+      // Filters the menu array → only items that match this category.
+      const menuCategory = menu.filter(function (menuItem) { // Filter = Keep only items that match the condition.
+        // In JavaScript, you filter array → remove items that don’t match.
         // console.log(menuItem.category);
         if (menuItem.category === category) {
           return menuItem;
         }
       });
+      // If “all” button clicked → show everything.
       if (category === "all") {
         displayMenuItems(menu);
-      } else {
+      } else { // Else → show only the filtered items.
         displayMenuItems(menuCategory);
       }
     });
